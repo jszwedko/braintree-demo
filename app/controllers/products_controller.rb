@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:buy_drop_in, :buy_transparent_redirect, :buy_server_to_server, :buy_encrypted, :buy_tokenized]
+  before_action :set_product, only: [:buy_drop_in, :buy_transparent_redirect, :buy_server_to_server, :buy_encrypted, :buy_tokenized, :buy_stripe]
 
   def index
     @products = Product.all
@@ -27,6 +27,9 @@ class ProductsController < ApplicationController
   end
 
   def buy_encrypted
+  end
+
+  def buy_stripe
   end
 
   private

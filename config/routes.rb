@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post 'checkout/nonce'
   post 'checkout/server_to_server'
   post 'checkout/encrypted'
+  post 'checkout/stripe'
   get 'checkout/transparent_redirect'
 
   resources :products
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
       get  'buy_server_to_server'
       get  'buy_encrypted'
       get  'buy_tokenized'
+      get  'buy_stripe'
     end
   end
 

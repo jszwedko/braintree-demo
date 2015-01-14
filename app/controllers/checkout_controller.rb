@@ -57,4 +57,21 @@ class CheckoutController < ApplicationController
 
     redirect_to products_path
   end
+
+  def stripe
+    token = params[:stripeToken]
+    product = Product.find(params[:product_id])
+
+    charge = Stripe::Charge.create(
+      :card => token,
+      :currency => 'usd',
+      :amount => product.price,
+    )
+
+    flash[:success] = "Purchased!"
+  rescue Stripe::CardError => e
+      flash[:alert] = "Error'd processing transaction"
+  ensure
+    redirect_to products_path
+  end
 end

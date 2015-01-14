@@ -1,0 +1,12 @@
+<p>About to buy <%= @product.name %> for <%= @product.price %></p>
+
+<%= form_tag checkout_stripe_path,  id: "checkout", method: "post" do%>
+  <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                              data-key="<%= STRIPE_PUBLIC_KEY %>"
+                                                              data-amount="<%= @product.price %>"
+                                                              data-name="<%= @product.name %>"
+                                                              data-description="<%= @product.name %>">
+  </script>
+  <%= hidden_field_tag(:product_id, @product.id) %>
+<% end %>
