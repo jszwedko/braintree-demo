@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   post 'checkout/drop_in'
   post 'checkout/server_to_server'
+  post 'checkout/encrypted'
   get 'checkout/transparent_redirect'
 
   resources :products
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
       get  'buy_drop_in'
       get  'buy_transparent_redirect'
       get  'buy_server_to_server'
+      get  'buy_encrypted'
     end
   end
 

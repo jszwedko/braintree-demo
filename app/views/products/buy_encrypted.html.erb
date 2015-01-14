@@ -1,0 +1,67 @@
+<% content_for(:head) do %>
+  <%= javascript_include_tag 'https://js.braintreegateway.com/v1/braintree.js' %>
+  <%= javascript_tag do %>
+    var braintree = Braintree.create("<%= BRAINTREE_CLIENTSIDE_ENCRYPTION_KEY %>");
+  <% end %>
+<% end %>
+
+<p>About to buy <%= @product.name %> for <%= @product.price %></p>
+
+<div id="form_content">
+  <%= form_tag checkout_encrypted_path,  id: "transaction_form", method: "post" do%>
+    <input type="text" name="transaction[credit_card][number]" id="transaction_credit_card_number" placeholder="number"/>
+    <input type="text" name="transaction[credit_card][expiration_date]" placeholder="expiration"/>
+    <input type="text" name="transaction[credit_card][cvv]" id="transaction_credit_card_cvv" placeholder="cvv"/>
+    <%= hidden_field_tag(:product_id, @product.id) %>
+    <input type="submit" value="Buy!">
+  <% end %>
+  <div id="new_form_content" style="display: none">
+  </div>
+</div>
+
+<% content_for(:bottom) do %>
+  <%= javascript_tag do %>
+    var updateIds = function (form) {
+      form.find("*").each(function (index, element) {
+        if ($(element).attr("id")) {
+          $(element).attr("id", "new_" + $(element).attr("id"));
+        }
+      });
+    };
+
+    var shouldEncrypt = function (element) {
+      var encryptedFields = [
+        'transaction_credit_card_cvv',
+        'transaction_credit_card_number'
+      ];
+      var elementId = $(element).attr("id")
+      return ($.inArray(elementId, encryptedFields) >= 0);
+    }
+
+    var encryptFormValues = function () {
+      $("#transaction_form :input").each(function (index, element) {
+        var elementId = $(element).attr("id");
+        var elementValue = $(element).val();
+
+        if (shouldEncrypt(element)) {
+          $("#new_" + elementId).val(braintree.encrypt(elementValue));
+        } else {
+          $("#new_" + elementId).val(elementValue);
+        }
+      });
+    };
+
+    var encryptedForm = function () {
+    var newForm = $("#form_content").clone();
+      updateIds(newForm);
+      $('#new_form_content').append(newForm);
+      encryptFormValues();
+      return $('#new_transaction_form');
+    };
+
+    $('#transaction_form').submit(function () {
+      encryptedForm().submit();
+      return false;
+    });
+  <% end %>
+<% end %>

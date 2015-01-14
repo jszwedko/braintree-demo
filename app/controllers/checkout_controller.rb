@@ -41,4 +41,20 @@ class CheckoutController < ApplicationController
 
     redirect_to products_path
   end
+
+  def encrypted
+    product = Product.find(params[:product_id])
+    result = Braintree::Transaction.sale(
+      :amount => product.price / 100,
+      :credit_card => params[:transaction][:credit_card],
+    )
+
+    if result.success?
+      flash[:success] = "Purchased #{product.name}!"
+    else
+      flash[:alert] = "Error'd processing transaction"
+    end
+
+    redirect_to products_path
+  end
 end
