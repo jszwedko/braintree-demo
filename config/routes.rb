@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'products#index'
 
   post 'checkout/drop_in'
+  post 'checkout/server_to_server'
   get 'checkout/transparent_redirect'
 
   resources :products
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
     member do
       get  'buy_drop_in'
       get  'buy_transparent_redirect'
+      get  'buy_server_to_server'
     end
   end
 

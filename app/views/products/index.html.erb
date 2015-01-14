@@ -18,6 +18,7 @@
         <td><%= product.price %></td>
         <td><%= link_to 'Buy (Drop In)', buy_drop_in_product_path(product) %></td>
         <td><%= link_to 'Buy (Transparent Redirect)', buy_transparent_redirect_product_path(product) %></td>
+        <td><%= link_to 'Buy (Server to server)', buy_server_to_server_product_path(product) %></td>
       </tr>
     <% end %>
   </tbody>

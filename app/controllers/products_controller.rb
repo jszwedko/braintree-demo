@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:buy_drop_in, :buy_transparent_redirect]
+  before_action :set_product, only: [:buy_drop_in, :buy_transparent_redirect, :buy_server_to_server]
 
   def index
     @products = Product.all
@@ -17,6 +17,9 @@ class ProductsController < ApplicationController
         :amount => @product.price / 100
       }
     )
+  end
+
+  def buy_server_to_server
   end
 
   private
