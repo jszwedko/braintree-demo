@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:buy_drop_in]
+  before_action :set_product, only: [:buy_drop_in, :buy_transparent_redirect]
 
   def index
     @products = Product.all
@@ -9,8 +9,17 @@ class ProductsController < ApplicationController
     @client_token = Braintree::ClientToken.generate()
   end
 
+  def buy_transparent_redirect
+    @tr_data = Braintree::TransparentRedirect.transaction_data(
+      :redirect_url => "#{request.protocol}#{request.host}:#{request.port}#{checkout_transparent_redirect_path}",
+      :transaction => {
+        :type => "sale",
+        :amount => @product.price / 100
+      }
+    )
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])
     end

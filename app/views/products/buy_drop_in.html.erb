@@ -2,11 +2,9 @@
   <%= javascript_include_tag 'https://js.braintreegateway.com/v2/braintree.js' %>
 <% end %>
 
-<p id="notice"><%= notice %></p>
-
 <p>About to buy <%= @product.name %> for <%= @product.price %></p>
 
-<%= form_tag checkout_drop_in_path(@product),  id: "checkout", method: "post" do%>
+<%= form_tag checkout_drop_in_path,  id: "checkout", method: "post" do%>
   <div id="dropin"></div>
   <%= hidden_field_tag(:product_id, @product.id) %>
   <input type="submit" value="Buy!">

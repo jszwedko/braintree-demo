@@ -1,0 +1,10 @@
+<p>About to buy <%= @product.name %> for <%= @product.price %></p>
+
+<%= form_tag Braintree::TransparentRedirect.url,  id: "checkout", method: "post" do%>
+  <input type="text" name="transaction[credit_card][number]" placeholder="number"/>
+  <input type="text" name="transaction[credit_card][expiration_date]" placeholder="expiration"/>
+  <input type="text" name="transaction[credit_card][cvv]" placeholder="cvv"/>
+  <%= hidden_field_tag(:product_id, @product.id) %>
+  <%= hidden_field_tag(:tr_data, @tr_data) %>
+  <input type="submit" value="Buy!">
+<% end %>
