@@ -1,5 +1,5 @@
 class CheckoutController < ApplicationController
-  def drop_in
+  def nonce
     product = Product.find(params[:product_id])
     result = Braintree::Transaction.sale(
       :amount => product.price / 100,

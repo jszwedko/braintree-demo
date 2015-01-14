@@ -5,17 +5,20 @@
 <p>About to buy <%= @product.name %> for <%= @product.price %></p>
 
 <%= form_tag checkout_nonce_path,  id: "checkout", method: "post" do%>
-  <div id="dropin"></div>
+  <input data-braintree-name="cardholder_name" placeholder="name">
+  <input data-braintree-name="number" placeholder="number">
+
+  <input data-braintree-name="expiration_date" placeholder="expiration">
+  <input data-braintree-name="cvv" placeholder="cvv">
+
+  <input data-braintree-name="postal_code" placeholder="postal">
+
   <%= hidden_field_tag(:product_id, @product.id) %>
   <input type="submit" value="Buy!">
 <% end %>
 
 <% content_for(:bottom) do %>
   <%= javascript_tag do %>
-    braintree.setup(
-      '<%= @client_token %>',
-      'dropin', {
-        container: 'dropin'
-      });
+    braintree.setup('<%= @client_token %>', 'custom', { id: "checkout" });
   <% end %>
 <% end %>

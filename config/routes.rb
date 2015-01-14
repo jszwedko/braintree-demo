@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'products#index'
 
-  post 'checkout/drop_in'
+  post 'checkout/nonce'
   post 'checkout/server_to_server'
   post 'checkout/encrypted'
   get 'checkout/transparent_redirect'
@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       get  'buy_transparent_redirect'
       get  'buy_server_to_server'
       get  'buy_encrypted'
+      get  'buy_tokenized'
     end
   end
 

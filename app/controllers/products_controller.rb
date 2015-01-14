@@ -1,11 +1,15 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:buy_drop_in, :buy_transparent_redirect, :buy_server_to_server, :buy_encrypted]
+  before_action :set_product, only: [:buy_drop_in, :buy_transparent_redirect, :buy_server_to_server, :buy_encrypted, :buy_tokenized]
 
   def index
     @products = Product.all
   end
 
   def buy_drop_in
+    @client_token = Braintree::ClientToken.generate()
+  end
+
+  def buy_tokenized
     @client_token = Braintree::ClientToken.generate()
   end
 
